@@ -100,9 +100,8 @@ export Jwt__Secret="your-strong-random-secret-of-at-least-32-characters"
 export Jwt__Issuer="GreenOpportunitiesAPI"
 export Jwt__Audience="GreenOpportunitiesClient"
 export Jwt__ExpirationInMinutes="1440"
-```
 
----
+
 
 ## 🔐 Default admin account (seeded)
 
@@ -112,7 +111,6 @@ export Jwt__ExpirationInMinutes="1440"
 | Password   | `Admin@123`                    |
 | Role       | `Admin`                        |
 
-> ⚠️ Change this in production.
 
 ---
 
@@ -129,11 +127,12 @@ export Jwt__ExpirationInMinutes="1440"
 
 | Method | Route                          | Auth     | Description                                            |
 |--------|--------------------------------|----------|--------------------------------------------------------|
-| GET    | `/api/opportunities`           | ❌       | Paginated list with filters (see below)                |
-| GET    | `/api/opportunities/{id}`      | ❌       | Get one opportunity by id                              |
-| POST   | `/api/opportunities`           | ✅ JWT   | Create a new opportunity (Admin/Editor role required)  |
-| PUT    | `/api/opportunities/{id}`      | ✅ JWT   | Update an opportunity (Admin/Editor role required)    |
-| DELETE | `/api/opportunities/{id}`      | ✅ JWT   | Delete an opportunity (Admin/Editor role required)    |
+| GET    | `/api/opportunities`           |           | Paginated list with filters (see below)                |
+| GET    | `/api/opportunities/{id}`      |           | Get one opportunity by id                              |
+| POST   | `/api/opportunities`           |  JWT   | Create a new opportunity (Admin/Editor role required)  |
+| PUT    | `/api/opportunities/{id}`      |  JWT   | Update an opportunity (Admin/Editor role required)    |
+| DELETE | `/api/opportunities/{id}`      | 
+JWT   | Delete an opportunity (Admin/Editor role required)    |
 
 #### Query parameters for `GET /api/opportunities`
 
@@ -262,31 +261,6 @@ curl -X DELETE http://localhost:5189/api/opportunities/2 \
 - **SQLite** — file `greenopportunities.db` is created on first run
 - **EF Core Migrations** live under `Data/Migrations/`
 - **Auto-seed** at startup (5 opportunities + 1 admin)
-
-To reset the database completely:
-
-```bash
-rm greenopportunities.db greenopportunities.db-wal greenopportunities.db-shm
-dotnet run
-```
-
----
-
-## ✅ Spec compliance
-
-| Requirement                                             | Status |
-|---------------------------------------------------------|--------|
-| `Opportunity` model with 8 fields                       | ✅     |
-| CRUD endpoints (list, detail, POST, PUT, DELETE)         | ✅     |
-| Pagination                                              | ✅     |
-| Keyword search (title / description)                    | ✅     |
-| Filtering by Type / Country / IsFullyFunded             | ✅     |
-| EF Core + SQLite + Migrations                           | ✅     |
-| JWT authentication                                      | ✅     |
-| Public read, protected write                            | ✅     |
-| Layered architecture (Controllers / Services / Repos)   | ✅     |
-| Correct HTTP codes (200/201/204/400/401/404/409)        | ✅     |
-| Swagger / OpenAPI                                       | ✅     |
 
 ---
 
