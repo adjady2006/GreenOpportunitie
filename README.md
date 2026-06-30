@@ -20,7 +20,7 @@
 
 ---
 
-## 🏗️ Architecture (Clean / Layered)
+## Architecture (Clean / Layered)
 
 ```
 GreenOpportunities/
@@ -56,7 +56,7 @@ GreenOpportunities/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -103,7 +103,7 @@ export Jwt__ExpirationInMinutes="1440"
 
 
 
-## 🔐 Default admin account (seeded)
+## Default admin account (seeded)
 
 | Field      | Value                          |
 |------------|--------------------------------|
@@ -114,7 +114,7 @@ export Jwt__ExpirationInMinutes="1440"
 
 ---
 
-## 📚 API Endpoints
+## API Endpoints
 
 ### Auth — `/api/auth`
 
@@ -166,7 +166,7 @@ Authorization: Bearer <jwt>
 
 ---
 
-## 🧪 Examples with `curl`
+##  Examples with `curl`
 
 ### 1. Login
 
@@ -228,7 +228,7 @@ curl -X DELETE http://localhost:5189/api/opportunities/2 \
 
 ---
 
-## 🧱 Data Model
+##  Data Model
 
 ### `Opportunity`
 
@@ -256,7 +256,7 @@ curl -X DELETE http://localhost:5189/api/opportunities/2 \
 
 ---
 
-## 🗄️ Database
+##  Database
 
 - **SQLite** — file `greenopportunities.db` is created on first run
 - **EF Core Migrations** live under `Data/Migrations/`
@@ -264,7 +264,7 @@ curl -X DELETE http://localhost:5189/api/opportunities/2 \
 
 ---
 
-## 📦 Repository layout
+## Repository layout
 
 ```
 GreenOpportunities/
@@ -288,7 +288,7 @@ GreenOpportunities/
 
 ---
 
-## 🧰 Bonus: Postman Collection
+##  Bonus: Postman Collection
 
 A ready-to-use Postman collection is included at:
 `src/GreenOpportunities.API/GreenOpportunities.postman_collection.json`
@@ -297,7 +297,7 @@ Import it into Postman → it has three folders (Auth / Public / Protected) and 
 
 ---
 
-## 📝 Notes
+## Notes
 
 - The API is **idempotent for reads**: restarting the app regenerates the DB if it doesn't exist, but never wipes existing data.
 - The `Admin` role is used by default on `POST /api/auth/register` (for demo purposes).
