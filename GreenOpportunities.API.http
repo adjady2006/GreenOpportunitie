@@ -1,0 +1,6 @@
+@GreenOpportunities.API_HostAddress = http://localhost:5189
+
+GET {{GreenOpportunities.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

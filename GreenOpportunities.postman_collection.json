@@ -1,0 +1,177 @@
+{
+  "info": {
+    "name": "Green Opportunities API",
+    "description": "Collection Postman pour tester l'API RESTful des opportunités (فرص خضراء).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{jwt_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5189",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const json = pm.response.json();",
+                  "    pm.collectionVariables.set('jwt_token', json.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Register new user",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"editor1\",\n  \"email\": \"editor1@foraskhadra.com\",\n  \"password\": \"Editor@123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunities (Public)",
+      "item": [
+        {
+          "name": "Get all (paginated)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/opportunities?page=1&pageSize=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "opportunities"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search keyword=Maroc",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/opportunities?keyword=Maroc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "opportunities"],
+              "query": [{ "key": "keyword", "value": "Maroc" }]
+            }
+          }
+        },
+        {
+          "name": "Filter type=Scholarship",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/opportunities?type=Scholarship",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "opportunities"],
+              "query": [{ "key": "type", "value": "Scholarship" }]
+            }
+          }
+        },
+        {
+          "name": "Filter fully funded only",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/opportunities?isFullyFunded=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "opportunities"],
+              "query": [{ "key": "isFullyFunded", "value": "true" }]
+            }
+          }
+        },
+        {
+          "name": "Get by id",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/opportunities/1", "host": ["{{baseUrl}}"], "path": ["api", "opportunities", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Opportunities (Protected)",
+      "item": [
+        {
+          "name": "Create opportunity",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/opportunities", "host": ["{{baseUrl}}"], "path": ["api", "opportunities"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Bourse Eiffel 2026\",\n  \"description\": \"Programme Eiffel pour masters en France\",\n  \"type\": \"Scholarship\",\n  \"country\": \"France\",\n  \"deadline\": \"2027-01-15T00:00:00Z\",\n  \"isFullyFunded\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Update opportunity",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "{{baseUrl}}/api/opportunities/1", "host": ["{{baseUrl}}"], "path": ["api", "opportunities", "1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Chevening modifié\",\n  \"description\": \"Description mise à jour\",\n  \"type\": \"Scholarship\",\n  \"country\": \"UK\",\n  \"deadline\": \"2026-12-01T00:00:00Z\",\n  \"isFullyFunded\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete opportunity",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{baseUrl}}/api/opportunities/1", "host": ["{{baseUrl}}"], "path": ["api", "opportunities", "1"] }
+          }
+        }
+      ]
+    }
+  ]
+}
